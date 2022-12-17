@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utilities.Extensions;
 
 internal class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -6,7 +7,7 @@ internal class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     private bool destroyOnlyComponent;
 
     public static T Instance {
-        get => _instance;
+        get => _instance == null ? FindInstance() : _instance;
         private protected set => _instance = value;
     }
 
@@ -23,5 +24,8 @@ internal class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
     private void SetUp() {
         _isInitialized = true;
+    }
+    private static T FindInstance() {
+        return _instance = ObjectExtensions.FindSingleInScene<T>(true);
     }
 }
