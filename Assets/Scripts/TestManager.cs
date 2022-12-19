@@ -3,24 +3,31 @@ using DI.Attributes.Register;
 using DI.Attributes.Run;
 using DI.Interfaces.KernelInterfaces;
 using DI.Kernels;
+using System.Collections.Generic;
 using Utilities.Behaviours;
 
-[Register]
+
 internal class TestManager : KernelEntityBehaviour
 {
 
-    [ConstructField]
-    private Test2 _test2;
+    private void Handler() {
+        
+    }
 
-    [ConstructMethod(typeof(LogicSceneKernel))]
+
+
+
+    #region KernelEntity
+    private List<ITesting> _connectionManager;
+
+
+    [ConstructMethod]
     private void Construct(IKernel kernel) {
-        if(_test2 == null) {
-            return;
-        }
+        _connectionManager = kernel.GetInjections<ITesting>();
+        _connectionManager.ForEach(x => x.log("Error"));
     }
 
-    [RunMethod]
-    private void Run(IKernel kernel) {
-        _test2.Logger();
-    }
+
+
+    #endregion
 }

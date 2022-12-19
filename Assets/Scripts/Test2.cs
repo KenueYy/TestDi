@@ -2,11 +2,15 @@ using DI.Attributes.Register;
 using UnityEngine;
 using Utilities.Behaviours;
 
-[Register]
-internal class Test2 : KernelEntityBehaviour
+[Register(typeof(ITesting))]
+internal class Test2 : KernelEntityBehaviour, ITesting
 {
     
-    internal void Logger() {
-        Debug.Log("Все работает");
+    public void log(string message) {
+        Debug.Log(message);
     }
+}
+
+interface ITesting {
+    void log(string message);
 }
